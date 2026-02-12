@@ -34,7 +34,7 @@ public class ExpiryBasedInventoryProcessor implements InventoryProcessor {
 	}
 
     /**
-     * Retrieves inventory details for a specific product
+     * Retrieves inventory details for a specific product sorted by expiry date asc
      * @param productId Product ID
      * @return {@link InventoryResponse}
      */
