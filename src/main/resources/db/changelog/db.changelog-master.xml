@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="
+        http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- ================= INVENTORY TABLE ================= -->
+    <changeSet id="1" author="koerber">
+        <createTable tableName="inventory">
+            <column name="batch_id"
+                    type="BIGINT"
+                    autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="product_id" type="BIGINT"/>
+            <column name="product_name" type="VARCHAR(255)"/>
+            <column name="quantity" type="INT"/>
+            <column name="expiry_date" type="DATE"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ================= LOAD INVENTORY DATA ================= -->
+    <changeSet id="2" author="koerber">
+        <loadData file="db/changelog/data/inventory.csv"
+                  tableName="inventory"
+                  separator=","
+                  encoding="UTF-8"/>
+    </changeSet>
+
+    <!-- Restart INVENTORY identity from 11 -->
+    <changeSet id="3" author="koerber">
+        <sql>
+            ALTER TABLE inventory ALTER COLUMN batch_id RESTART WITH 11;
+        </sql>
+    </changeSet>
+
+    <!-- ================= INVENTORY RESERVATION TABLE ================= -->
+    <changeSet id="4" author="koerber">
+        <createTable tableName="inventory_reservation">
+            <column name="id"
+                    type="BIGINT"
+                    autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+
+            <column name="order_id" type="BIGINT"/>
+            <column name="batch_id" type="BIGINT"/>
+            <column name="reserved_quantity" type="INT"/>
+        </createTable>
+    </changeSet>
+
+    <!-- ================= LOAD RESERVATION DATA ================= -->
+    <changeSet id="5" author="koerber">
+        <loadData file="db/changelog/data/inventory_reservation.csv"
+                  tableName="inventory_reservation"
+                  separator=","
+                  encoding="UTF-8"/>
+    </changeSet>
+
+    <!-- Restart RESERVATION identity from 11 -->
+    <changeSet id="6" author="koerber">
+        <sql>
+            ALTER TABLE inventory_reservation ALTER COLUMN id RESTART WITH 11;
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>
