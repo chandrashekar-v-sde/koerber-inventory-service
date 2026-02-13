@@ -34,13 +34,14 @@ http://localhost:8081
 
 ## Start Application
 
+mvn clean install
 mvn spring-boot:run
 
 H2 Console:
 http://localhost:8081/h2-console
 
 JDBC URL:
-jdbc:h2:mem:testdb
+jdbc:h2:mem:inventorydb
 
 ---
 
